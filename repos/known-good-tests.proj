@@ -7,11 +7,7 @@
     <SkipEnsurePackagesCreated>true</SkipEnsurePackagesCreated>
   </PropertyGroup>
 
-  <!-- This project file serves a couple of purpose.
-       - We conditionally include repos based on what works on different platforms/configurations.
-       - We need an "empty" build after the last real repo for prebuilt detection to work - this is that file.
-       - If we have a repo that is not in core-sdk's dependency tree, we can still build it by including it here.  -->
-
+  <!-- This project file includes only repos that are enabled for building and running tests in source-build.  -->
   <!-- Windows and ARM builds don't support all repos, keep them separate for future conditioning. -->
   <Choose>
     <When Condition="'$(OS)' == 'Windows_NT'">
