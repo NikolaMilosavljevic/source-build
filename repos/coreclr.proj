@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PreferredHash>4895a06c0dcc5d13f75dd55bdce83f7792d72ba4</PreferredHash>
+    <PreferredHash>48431cc037776ca359de36bf71bda8c154cc2aa9</PreferredHash>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))/dir.props" />
 
   <PropertyGroup>
     <BuildArguments>$(Platform) $(Configuration) skiptests</BuildArguments>
+    <BuildArguments Condition="'$(OS)' != 'Windows_NT'">$(BuildArguments) -ignoreWarnings</BuildArguments>
+    <BuildArguments Condition="'$(OS)' != 'Windows_NT'">$(BuildArguments) -skipgenerateversion</BuildArguments>
+    <BuildArguments Condition="'$(OS)' != 'Windows_NT'">$(BuildArguments) -skiprestore</BuildArguments>
     <BuildArguments Condition="'$(SkipDisablePgo)' != 'true'">$(BuildArguments) -nopgooptimize</BuildArguments>
     <BuildArguments Condition="'$(OS)' != 'Windows_NT'">$(BuildArguments) msbuildonunsupportedplatform</BuildArguments>
     <BuildArguments Condition="'$(UseSystemLibraries)' == 'true' AND '$(OS)' != 'Windows_NT'">$(BuildArguments) cmakeargs -DCLR_CMAKE_USE_SYSTEM_LIBUNWIND=TRUE</BuildArguments>
@@ -20,13 +23,19 @@
     <BuildArguments>$(BuildArguments) /bl</BuildArguments>
     <BuildArguments>$(BuildArguments) /p:ILLinkTrimAssembly=false</BuildArguments>
     <BuildArguments>$(BuildArguments) /p:CheckCDefines=false</BuildArguments>
+    <BuildArguments>$(BuildArguments) /p:EnableSourceLink=false</BuildArguments>
+    <BuildArguments>$(BuildArguments) -warnaserror:0</BuildArguments>
 
     <BuildCommand>$(ProjectDirectory)/build$(ShellExtension) $(BuildArguments)</BuildCommand>
 
     <BuildCommand Condition="$(Platform.Contains('arm'))">$(ArmEnvironmentVariables) $(BuildCommand)</BuildCommand>
 
     <CleanCommand>$(ProjectDirectory)/clean$(ShellExtension)</CleanCommand>
-    <OfficialBuildId>20190422.75</OfficialBuildId>
+    <OfficialBuildId>20190510.71</OfficialBuildId>
+
+    <OutputPlacementRepoApiImplemented>false</OutputPlacementRepoApiImplemented>
+    <PackagesOutput>$(ProjectDirectory)bin/Product/$(TargetOS).$(Platform).$(Configuration)/.nuget/pkg</PackagesOutput>
+    <NuGetConfigFile>$(ProjectDirectory)/NuGet.config</NuGetConfigFile>
   </PropertyGroup>
 
   <ItemGroup>

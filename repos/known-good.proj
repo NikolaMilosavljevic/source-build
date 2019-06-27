@@ -31,6 +31,7 @@
 
         <!-- Tier 1 -->
         <RepositoryReference Include="application-insights" />
+        <RepositoryReference Include="aspnet-xdt" />
         <RepositoryReference Include="common" />
         <RepositoryReference Include="netcorecli-fsc" />
         <RepositoryReference Include="newtonsoft-json" />
@@ -60,7 +61,6 @@
 
         <RepositoryReference Include="sdk" />
         <RepositoryReference Include="vstest" />
-        <RepositoryReference Include="cli-migrate" />
         <RepositoryReference Include="fsharp" />
 
         <!-- Tier 6 -->

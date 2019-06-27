@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PreferredHash>d06ce9d2116cb4bda528822e63d32ce3735ea653</PreferredHash>
+    <PreferredHash>a28176b5ec68b6da1472934fe9493790d1665cae</PreferredHash>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))/dir.props" />
 
   <PropertyGroup>
     <GlobalJsonFile>$(ProjectDirectory)global.json</GlobalJsonFile>
+    <UpdateGlobalJsonToV3Sdk>true</UpdateGlobalJsonToV3Sdk>
 
     <!-- OSX core-setup build always uses the portable RID, so override it -->
     <OverridePortableBuild>$(PortableBuild)</OverridePortableBuild>
@@ -54,7 +55,7 @@
     <PackagesOutput>$(ProjectDirectory)artifacts/packages/$(Configuration)/</PackagesOutput>
 
     <CleanCommand>$(ProjectDirectory)/clean$(ShellExtension)</CleanCommand>
-    <OfficialBuildId>20190424.8</OfficialBuildId>
+    <OfficialBuildId>20190514.9</OfficialBuildId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -71,6 +72,17 @@
 
   <ItemGroup>
     <EnvironmentVariables Include="OfficialBuildId=$(OfficialBuildId)" />
+
+    <!-- reset SDK location variables to use 3.0 SDK override -->
+    <EnvironmentVariables Remove="DOTNET_TOOL_DIR=$(DotNetCliToolDir)" />
+    <EnvironmentVariables Remove="DotNetCoreSdkDir=$(DotNetCliToolDir)" />
+    <EnvironmentVariables Remove="DotNetRoot=$(DotNetCliToolDir)" />
+    <EnvironmentVariables Remove="_InitializeDotNetCli=$(DotNetCliToolDir)" />
+
+    <EnvironmentVariables Include="DOTNET_TOOL_DIR=$(DotNet3CliToolDir)" />
+    <EnvironmentVariables Include="DotNetCoreSdkDir=$(DotNet3CliToolDir)" />
+    <EnvironmentVariables Include="DotNetRoot=$(DotNet3CliToolDir)" />
+    <EnvironmentVariables Include="_InitializeDotNetCli=$(DotNet3CliToolDir)" />
   </ItemGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))/dir.targets" />
