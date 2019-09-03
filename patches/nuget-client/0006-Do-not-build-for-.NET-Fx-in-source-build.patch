@@ -1,0 +1,26 @@
+From c363d6a49cdf234722be7074fae5ba106e85313e Mon Sep 17 00:00:00 2001
+From: Nikola Milosavljevic <nikolam@microsoft.com>
+Date: Fri, 30 Aug 2019 16:42:56 +0000
+Subject: [PATCH 6/6] Do not build for .NET Fx in source build
+
+---
+ build/common.project.props | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/build/common.project.props b/build/common.project.props
+index a1e42fb..08f3a29 100644
+--- a/build/common.project.props
++++ b/build/common.project.props
+@@ -13,7 +13,9 @@
+     <NETCoreTargetFramework>netcoreapp2.1</NETCoreTargetFramework>
+     <NetStandardVersion>netstandard2.0</NetStandardVersion>
+     <TargetFrameworksExe>$(NETFXTargetFramework);$(NETCoreTargetFramework)</TargetFrameworksExe>
++    <TargetFrameworksExe Condition="'$(DotNetBuildFromSource)' == 'true'">$(NETCoreTargetFramework)</TargetFrameworksExe>
+     <TargetFrameworksLibrary>$(NETFXTargetFramework);$(NetStandardVersion)</TargetFrameworksLibrary>
++    <TargetFrameworksLibrary Condition="'$(DotNetBuildFromSource)' == 'true'">$(NetStandardVersion)</TargetFrameworksLibrary>
+     <RepositoryRootDirectory>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'README.md'))\</RepositoryRootDirectory>
+     <BuildCommonDirectory>$(RepositoryRootDirectory)build\</BuildCommonDirectory>
+     <SolutionFile>$(RepositoryRootDirectory)$(RepositoryName).sln</SolutionFile>
+-- 
+1.8.3.1
+
